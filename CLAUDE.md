@@ -192,7 +192,7 @@ gh pr merge                     # PR 머지
 ### 계획 우선 원칙 (MANDATORY)
 1. **모든 구현 작업 전에 반드시 plan을 먼저 작성**한다.
 2. 계획은 `docs/plans/` 디렉토리에 마크다운 파일로 저장한다.
-   - 파일명: `NNNN-feature-name.md` (예: `0001-conversation-collector.md`)
+   - 파일명: GitHub 이슈 번호를 접두사로 사용 (예: `0010-turborepo-pnpm-monorepo-setup.md`)
 3. 계획에는 다음을 포함한다:
    - 목표 및 범위
    - 구현 단계 (체크리스트)
