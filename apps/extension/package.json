@@ -1,0 +1,14 @@
+{
+  "name": "extension",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "echo \"dev: not yet configured\"",
+    "build": "echo \"build: not yet configured\"",
+    "test": "echo \"test: not yet configured\"",
+    "lint": "echo \"lint: not yet configured\""
+  },
+  "dependencies": {
+    "@revolta/shared": "workspace:*"
+  }
+}

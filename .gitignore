@@ -1,2 +1,11 @@
+# Dependencies
+node_modules/
+
+# Turbo
+.turbo/
+
+# Build outputs
+dist/
+
 # Claude
 .claude

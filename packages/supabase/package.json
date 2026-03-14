@@ -1,0 +1,10 @@
+{
+  "name": "@revolta/supabase",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "db:push": "echo \"db:push: not yet configured\"",
+    "db:reset": "echo \"db:reset: not yet configured\"",
+    "functions:serve": "echo \"functions:serve: not yet configured\""
+  }
+}
