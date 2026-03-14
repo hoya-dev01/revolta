@@ -1,0 +1,93 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx *)",
+      "Bash(pnpm *)",
+      "Bash(turbo *)",
+      "Bash(node *)",
+      "Bash(git *)",
+      "Bash(gh *)",
+      "Bash(supabase *)",
+      "Bash(cat *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(sort *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(rm *)",
+      "Bash(touch *)",
+      "Bash(echo *)",
+      "Bash(sed *)",
+      "Bash(awk *)",
+      "Bash(curl *)",
+      "Bash(which *)",
+      "Bash(env *)",
+      "Bash(pwd)",
+      "Bash(date)",
+      "Bash(tsc *)",
+      "Bash(eslint *)",
+      "Bash(prettier *)",
+      "Bash(vitest *)",
+      "Bash(playwright *)",
+      "Read(*)",
+      "Write(*)"
+    ]
+  },
+  "hooks": [
+    {
+      "matcher": "Write",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "npx prettier --write \"$CLAUDE_FILE_PATHS\" 2>/dev/null || true"
+        }
+      ]
+    },
+    {
+      "matcher": "Edit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "if [[ \"$CLAUDE_FILE_PATHS\" =~ \\.(ts|tsx)$ ]]; then npx tsc --noEmit --skipLibCheck 2>/dev/null || echo '⚠️ TypeScript errors detected'; fi"
+        }
+      ]
+    }
+  ],
+  "agents": {
+    "codegen": {
+      "model": "claude-sonnet-4-20250514",
+      "prompt": "You are a code implementation agent for the Revolta project. You write clean, well-typed TypeScript code following the conventions in CLAUDE.md. You only modify files within your assigned scope. Always check existing types in packages/shared/ before creating new ones. Include proper error handling in every async function.",
+      "allowedTools": ["Read", "Write", "Edit", "Bash"],
+      "isolation": "worktree"
+    },
+    "tester": {
+      "model": "claude-sonnet-4-20250514",
+      "prompt": "You are a testing agent for the Revolta project. You write comprehensive unit tests using Vitest and E2E tests using Playwright. Focus on edge cases, error scenarios, and integration between content scripts and background service worker. Never modify source code in src/ — only create/edit files under tests/.",
+      "allowedTools": ["Read", "Write", "Edit", "Bash"],
+      "scope": ["apps/extension/tests/**", "packages/*/tests/**"],
+      "isolation": "worktree"
+    },
+    "reviewer": {
+      "model": "claude-sonnet-4-20250514",
+      "prompt": "You are a code review agent for the Revolta project. Analyze code for: type safety issues, missing error handling, security vulnerabilities (especially in content scripts), performance concerns, and adherence to CLAUDE.md conventions. Provide structured feedback with severity levels (critical/warning/suggestion). Never edit files directly.",
+      "allowedTools": ["Read", "Bash"],
+      "isolation": "none"
+    },
+    "docs": {
+      "model": "claude-sonnet-4-20250514",
+      "prompt": "You are a documentation agent for the Revolta project. Keep README.md, docs/, and plan files up to date. When a feature is implemented, update the relevant plan checklist and architecture docs. Write clear, concise documentation in Korean or English as appropriate.",
+      "allowedTools": ["Read", "Write", "Edit"],
+      "scope": ["docs/**", "README.md", "CLAUDE.md", "packages/*/README.md"],
+      "isolation": "none"
+    }
+  },
+  "env": {
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "70"
+  }
+}
